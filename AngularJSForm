@@ -1,0 +1,93 @@
+<body class="contact-page" ng-controller="contactUsController as contactUs">
+    <div class="main main-raised">
+        <div class="contact-content">
+            <div class="container">
+                <h2 class="title">Send us a message</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="description">
+                            You can contact us with anything related to our Products. We'll get in touch with you as soon as possible.<br><br>
+                        </p>
+                        <form name="contactUsForm" novalidate ng-submit="contactUs.submitForm(contactUsForm.$valid)" role="form" id="contact-form" method="post">
+                            <div class="form-group" ng-class="{'has-error': (contactUsForm.name.$pristine && contactUsForm.name.$invalid && contactUsForm.$submitted) || (contactUsForm.name.$error.minlength && contactUsForm.$submitted)|| (contactUsForm.name.$error.maxlength && contactUsForm.$submitted)}">
+                                <label class="control-label">Name</label>
+                                <input type="text" name="name" class="form-control" ng-model="contactUs.item.name" ng-minlength="2" ng-maxlength="50" required />
+                                <p ng-if="(contactUsForm.name.$error.required && !contactUsForm.name.$pristine) || (contactUsForm.name.$pristine && contactUsForm.name.$invalid && contactUsForm.$submitted)">
+                                    Your name is required.
+                                </p>
+                                <p ng-if="contactUsForm.name.$error.minlength && contactUsForm.$submitted">Name is too short</p>
+                                <p ng-if="contactUsForm.name.$error.maxlength && contactUsForm.$submitted">Name is too long.</p>
+
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (contactUsForm.email.$pristine && contactUsForm.email.$invalid && contactUsForm.$submitted) || (contactUsForm.email.$error.minlength && contactUsForm.$submitted)|| (contactUsForm.email.$error.maxlength && contactUsForm.$submitted)}">
+                                <label class="control-label">Email address</label>
+                                <input type="email" name="email" class="form-control" ng-model="contactUs.item.email" required />
+                                <p ng-if="(contactUsForm.email.$error.required && !contactUsForm.email.$pristine) || (contactUsForm.email.$pristine && contactUsForm.email.$invalid && contactUsForm.$submitted)">Enter a valid email.</p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Phone</label>
+                                <input type="text" name="phone" class="form-control" ng-model="contactUs.item.phone" />
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (contactUsForm.subject.$pristine && contactUsForm.subject.$invalid && contactUsForm.$submitted) || (contactUsForm.subject.$error.minlength && contactUsForm.$submitted)|| (contactUsForm.subject.$error.maxlength && contactUsForm.$submitted)}">
+                                <label class="control-label">Subject</label>
+                                <input type="text" name="subject" class="form-control" ng-model="contactUs.item.subject" ng-minlength="2" ng-maxlength="25" required />
+                                <p ng-if="(contactUsForm.subject.$error.required && !contactUsForm.subject.$pristine) || (contactUsForm.subject.$pristine && contactUsForm.subject.$invalid && contactUsForm.$submitted)">
+                                    A Subject is required.
+                                </p>
+
+                                <p ng-if="contactUsForm.subject.$error.minlength && contactUsForm.$submitted">Subject is too short</p>
+                                <p ng-if="contactUsForm.subject.$error.maxlength && contactUsForm.$submitted">Subject is too long.</p>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (contactUsForm.messageText.$pristine && contactUsForm.messageText.$invalid && contactUsForm.$submitted) || (contactUsForm.messageText.$error.minlength && contactUsForm.$submitted)|| (contactUsForm.messageText.$error.maxlength && contactUsForm.$submitted)}">
+                                <label class="control-label">Your message</label>
+                                <textarea name="messageText" class="form-control" id="message" rows="6" ng-model="contactUs.item.messageText" ng-minlength="4" ng-maxlength="500" required></textarea>
+                                <p ng-if="(contactUsForm.messageText.$error.required && !contactUsForm.messageText.$pristine) || (contactUsForm.messageText.$pristine && contactUsForm.messageText.$invalid && contactUsForm.$submitted)">
+                                    Message is required.
+                                </p>
+                                <p ng-if="contactUsForm.messageText.$error.minlength && contactUsForm.$submitted">Message is too short</p>
+                                <p ng-if="contactUsForm.messageText.$error.maxlength && contactUsForm.$submitted">Message is too long.</p>
+                            </div>
+                            <div class="submit text-center">
+                                <input type="submit" class="btn btn-primary btn-raised btn-round" value="Contact Us" ng-click="contactUs.sendEmail(contactUs.item)" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-md-4 col-md-offset-2">
+                        <div class="info info-horizontal">
+                            <div class="icon icon-primary">
+                                <i class="material-icons">pin_drop</i>
+                            </div>
+                            <div class="description">
+                                <h4 class="info-title"> Company Name</h4>
+                                <p>
+                                    1234 Address St, <br>
+                                    City, St<br>
+                                    56789
+                                </p>
+                            </div>
+                        </div>
+                        <div class="info info-horizontal">
+                            <div class="icon icon-primary">
+                                <i class="material-icons">phone</i>
+                            </div>
+                            <div class="description">
+                                <h4 class="info-title">Give us a call</h4>
+                                <p>
+                                    Company Contact Name<br>
+                                    (123) 456-7890<br>
+                                    Mon - Fri, 8:00-19:00
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+        </div>
+    </footer>
+</body>
