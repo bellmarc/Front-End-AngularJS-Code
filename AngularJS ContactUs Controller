@@ -1,0 +1,105 @@
+
+        (function () {
+            "use strict";
+
+            angular
+            .module(APPNAME)
+            .controller("contactUsController", ContactUsController);
+
+            ContactUsController.$inject = 
+            [     "$scope"
+                , "$baseController"
+                , "contactUsService"
+                , "geoService"
+            ];
+
+            function ContactUsController
+            (
+                $scope
+                , $baseController
+                , contactUsService
+                , geoService
+
+            ) {
+                var vm = this;
+
+                vm.map = null;
+                vm.item = null;
+                vm.$scope = $scope;
+                $baseController.merge(vm, $baseController);
+                vm.geoService = geoService;
+                vm.contactUsService = contactUsService;
+
+
+                vm.$onInit = _renderMap;
+                vm.sendEmail = _sendEmail;
+                vm.onContactUsSuccess = _onContactUsSuccess;
+                vm.onContactUsError = _onContactUsError;
+                vm.lgMarker = _lgMarker;
+
+
+                function _renderMap(mapCoordinates, markerOpts, mapId) 
+                {
+
+                    var mapId = "contactUsMap";
+                    var mapCenter = {
+                        lat: 23.4567
+                        , long: -123.4567890
+
+                    };
+                    var mapCoordinates = {
+                        latitude: 23.4567
+                       , longitude: -123.4567890
+
+                    };
+
+                    vm.mapOpts =
+                     {
+                            zoom: 12
+                       , scrollwheel: true
+                      }
+
+                    vm.markerOpts = 
+                    {
+                        markerIsVisible: true
+                    };
+
+                    vm.map = vm.geoService.initMap(mapCenter, vm.mapOpts, mapId);
+
+                    var marker = vm.geoService.createMarker(mapCoordinates, vm.markerOpts);
+
+                    vm.geoService.getMarkersFromArray([marker], vm.markerOpts);
+                    vm.geoService.addMarkersToMap(vm.map, [marker], vm.markerOpts);
+
+                    console.log(marker);
+
+                }
+
+                function _lgMarker(marker, map) {
+                    var markerArray = [marker];
+                    markerArray[0].setMap(map);
+                };
+
+
+                function _sendEmail(sendData) {
+                    if (sendData) {
+                        sendData.messageHtml = sendData.messageText + " " + "Phone: " + sendData.phone;
+                        sendData.messageText = sendData.messageText + " " + "Phone: " + sendData.phone;
+
+                        vm.contactUsService.sendContactInfo(sendData, _onContactUsSuccess, _onContactUsError);
+                    }
+                }
+
+            }
+
+            function _onContactUsSuccess() 
+            {
+                vm.$alertService.success("Sent Contact Email");
+            }
+
+            function _onContactUsError(jqXHR) 
+            {
+                vm.$alertService.error(jqXHR.responseText, "Contact Email failed to send");
+            }
+
+        })();
