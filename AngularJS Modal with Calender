@@ -1,0 +1,79 @@
+
+    <script type="text/ng-template" id="modalContent.html">
+        <div class="card modal-body">
+            <div class="card-header card-header-icon" data-background-color="red">
+                <i class="material-icons">library_books</i>
+            </div>
+            <form name="privacyForm" novalidate ng-submit="mc.submit(mc.modalItem, privacyForm.$valid)">
+                <div class="card-content">
+                    <h2 class="card-title">{{ mc.formTitle }}</h2>
+                    <div class="form-group">
+                        <label for="privacyParentId" class="control-label">
+                            Parent Id
+                        </label>
+                        <input name="parentId" type="number" id="parentId" class="form-control" ng-model="mc.modalItem.ParentId" rows="4" cols="100" />
+                        <span class="material-input"></span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (privacyForm.title.$pristine && mc.clicked) || privacyPolicy.title.$error.minlength || privacyForm.title.$error.maxlength}">
+                        <label for="privacyTitle" class="control-label">
+                            Title
+                            <small>*</small>
+                        </label>
+                        <input type="text" name="title" class="form-control" aria-required="true" ng-model="mc.modalItem.title" data-ng-minlength="4" data-ng-maxlength="50" required />  
+                        <p data-ng-if="(privacyForm.title.$error.required && !privacyForm.title.$pristine) || (privacyForm.title.$pristine && mc.clicked)">Title field is required.</p>
+                        <p data-ng-if="privacyForm.title.$error.minlength">A minimum of 4 characters is required.</p>
+                        <p data-ng-if="privacyForm.title.$error.maxlength">A maximum of 50 characters or less is required.</p>
+                        <span class="material-input"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="privacyDescription" class="control-label">
+                            Description
+                        </label>
+                        <textarea name="description" type="text" id="description" class="form-control" rows="4" cols="100" data-ng-model="mc.modalItem.description" data-ng-minlength="4" data-ng-maxlength="100"></textarea>
+                        <span class="material-input"></span>
+                        <p data-ng-if="privacyForm.description.$error.minlength"> A minimum of 4 characters is required in the description.</p>
+                        <p data-ng-if="privacyForm.description.$error.maxlength"> A maximum of 100 characters or less is required in the description.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="displayOrder" class="control-label">
+                            Display Order:
+                            <small>*</small>
+                        </label>
+                        <input name="displayOrder" type="number" id="displayOrder" class="form-control" rows="4" cols="100" ng-model="mc.modalItem.displayOrder" required />
+                        <p data-ng-if="(privacyForm.displayOrder.$error.required && !privacyForm.displayOrder.$pristine) || (privacyForm.displayOrder.$pristine && mc.clicked)">Please select a display order number.</p>
+                        @*<span class="material-input"></span>*@
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error': (privacyForm.createdDateFormatted.$pristine && mc.clicked)}" required>
+                        <label class="control-label createdDate">
+                            Created Date
+                            <small>*</small>
+                        </label>
+
+                        <p data-ng-if="(privacyForm.createdDate.$error.required && !privacyForm.createdDate.$pristine) || (privacyForm.createdDate.$pristine && mc.clicked)">Please select a date.</p>
+                        <div class="input-group" name="createdDate" type="number"
+                             moment-picker="mc.modalItem.createdDate" format="MM-DD-YYYY">
+                            <span class="input-group-addon ng-scope">
+                                <span class="input-active input-group-addon">
+                                    <i class="octicon octicon-calendar"></i>
+                                </span>
+                            </span>
+                            <input class="form-control"
+                                   name="createdDate"
+                                   format="MM-DD-YYYY"
+                                   ng-model="mc.modalItem.createdDate" @*mc.modalItem.createdDateFormatted*@
+                                   ng-model-options="{ updateOn: 'blur' }"
+                                   required />
+                        </div>
+                    </div>
+                </div>
+				            <div class="category form-category" style="color:red">
+                    <strong> <small>*</small>Required fields</strong>
+                    </div>
+                <div class="text-center">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary btn-fill btn-wd" ng-disabled="privacyForm.$invalid">Submit</button>
+                    <button type="button" class="btn btn-warning btn-fill" id="addBtn" data-ng-click="mc.cancel()">cancel</button>
+                </div>
+            </form>
+        </div>
+    </script>
